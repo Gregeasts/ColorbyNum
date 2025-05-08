@@ -1,0 +1,146 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: #333;
+  }
+  
+  /* Stylish title */
+  header {
+    width: 100%;
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+  
+  /* Upload & Download buttons */
+  #upload, #download {
+    margin: 20px 0;
+    padding: 10px 20px;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  #upload:hover,
+  #download:hover {
+    background: #2980b9;
+  }
+  
+  #main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    height: 650px;
+    box-sizing: border-box;
+  }
+  
+  /* Canvas styling */
+  #canvas-container {
+    width: 90%; 
+    height: 90%; 
+    overflow: auto;
+    border: 1px solid #ccc;
+    position: absolute;
+    
+  }
+  canvas {
+    border: 1px solid #000;
+    background-color: #fff;
+    display: block;
+    position:absolute; /* was absolute */
+    width: auto;
+    height: auto;
+    
+  }
+  
+  
+
+  /* Palette styling */
+  #palette {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .palette-color {
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .palette-color:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Preview box */
+  #preview-container {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    border: 1px solid #ccc;
+    background: white;
+    padding: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 10;
+    border-radius: 4px;
+  }
+  
+  #preview {
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+  #zoom-controls {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  #zoom-controls button {
+    padding: 8px 16px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #zoom-controls button:hover {
+    background: #1e8449;
+  }
+  
