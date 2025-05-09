@@ -9,10 +9,21 @@ let uploadedImage = null;
 upload.addEventListener('change', handleUpload);
 let gridWidth = parseInt(cellCountInput.value, 10);
 
+document.getElementById('fill-all')?.addEventListener('click', () => {
+  for (let y = 0; y < gridHeight; y++) {
+    for (let x = 0; x < gridWidth; x++) {
+      const cell = colorGrid[y][x];
+      cell.filled = true;
+    }
+  }
+  drawGrid();
+});
+
+
 // Listen for changes
 cellCountInput.addEventListener('input', () => {
     const value = parseInt(cellCountInput.value, 10);
-    if (!isNaN(value) && value > 0 && value<120) {
+    if (!isNaN(value) && value > 0 && value<200) {
       gridWidth = value;
       if (uploadedImage) {
         processImage(uploadedImage);
@@ -86,7 +97,7 @@ function processImage(img) {
     }
   }
 
-  colorPalette = generateDistinctPalette(pixels, 16);
+  colorPalette = generateDistinctPalette(pixels, 32);
   renderPalette();
 
   for (let y = 0; y < gridHeight; y++) {
@@ -219,7 +230,7 @@ function generateDistinctPalette(pixels, count) {
   const palette = [];
 
   for (let c of candidates) {
-    if (!palette.some(p => colorDistance(rgbStringToArray(p), c) < 40)) {
+    if (!palette.some(p => colorDistance(rgbStringToArray(p), c) < 15)) {
       palette.push(`rgb(${c[0]},${c[1]},${c[2]})`);
       if (palette.length === count) break;
     }

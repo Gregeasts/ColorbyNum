@@ -10,6 +10,21 @@ html, body {
     min-height: 100vh;
     color: #333;
   }
+  #fill-all {
+    margin: 20px 10px;
+    padding: 10px 20px;
+    border: none;
+    background: #e67e22;
+    color: white;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  #fill-all:hover {
+    background: #d35400;
+  }
   
   /* Stylish title */
   header {
