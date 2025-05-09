@@ -10,6 +10,37 @@ html, body {
     min-height: 100vh;
     color: #333;
   }
+  #progress-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  #progress-bar {
+    flex-grow: 1;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  }
+  
+  #progress-fill {
+    height: 100%;
+    background: #3498db;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  
+  #progress-text {
+    font-weight: bold;
+    min-width: 40px;
+    text-align: right;
+  }
+  
   #fill-all {
     margin: 20px 10px;
     padding: 10px 20px;
@@ -21,6 +52,24 @@ html, body {
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  /* Splash Fill Checkbox Styling */
+#splash-fill {
+  accent-color: #8e44ad; /* Purple accent */
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+label[for="splash-fill"],
+#splash-fill-label {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin: 10px 0;
+  gap: 8px;
+  user-select: none;
+  color: #333;
+}
+
   
   #fill-all:hover {
     background: #d35400;
@@ -41,7 +90,9 @@ html, body {
     font-size: 2rem;
     letter-spacing: 2px;
   }
-  
+  #splash{
+    margin: 0px;
+  }
   /* Upload & Download buttons */
   #upload, #download {
     margin: 20px 0;
@@ -134,6 +185,10 @@ html, body {
     z-index: 10;
     border-radius: 4px;
   }
+  .palette-color.selected {
+    border: 3px solid #000;
+    transform: scale(1.15);
+  }
   
   #preview {
     max-width: 150px;
@@ -142,6 +197,9 @@ html, body {
   
   #zoom-controls {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
     gap: 10px;
     margin: 10px 0;
   }

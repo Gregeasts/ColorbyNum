@@ -17,6 +17,7 @@ document.getElementById('fill-all')?.addEventListener('click', () => {
     }
   }
   drawGrid();
+  updateProgressBar();
 });
 
 
@@ -27,6 +28,7 @@ cellCountInput.addEventListener('input', () => {
       gridWidth = value;
       if (uploadedImage) {
         processImage(uploadedImage);
+        updateProgressBar();
       }
     }
 });
@@ -72,6 +74,7 @@ function handleUpload(e) {
     previewImg.src = img.src;
     uploadedImage = img;
     processImage(img);
+    updateProgressBar();
   };
   img.src = URL.createObjectURL(file);
 }
@@ -165,9 +168,55 @@ function fillCellAtMouse(e) {
   const cell = colorGrid[gridY]?.[gridX];
   if (!cell || cell.filled || cell.index !== selectedColorIndex) return;
 
-  cell.filled = true;
+  if (document.getElementById('splash-fill').checked) {
+    splashFill(gridX, gridY, cell.index);
+  } else {
+    cell.filled = true;
+  }
+  
   drawGrid();
+  updateProgressBar();
 }
+function splashFill(x, y, targetIndex) {
+  const queue = [[x, y]];
+  const visited = new Set();
+  const delay = 4; // Delay in milliseconds between each ripple
+
+  function fillStep() {
+    if (queue.length === 0) return;
+
+    const [cx, cy] = queue.shift();
+    const key = `${cx},${cy}`;
+    if (visited.has(key)) {
+      setTimeout(fillStep, delay);
+      return;
+    }
+
+    visited.add(key);
+
+    const cell = colorGrid[cy]?.[cx];
+    if (!cell || cell.filled || cell.index !== targetIndex) {
+      setTimeout(fillStep, delay);
+      return;
+    }
+
+    cell.filled = true;
+    drawGrid();
+
+    // Push 4-directional neighbors
+    queue.push([cx + 1, cy]);
+    queue.push([cx - 1, cy]);
+    queue.push([cx, cy + 1]);
+    queue.push([cx, cy - 1]);
+
+    setTimeout(fillStep, delay);
+    updateProgressBar();
+  }
+
+  fillStep();
+}
+
+
 
 function renderPalette() {
   paletteDiv.innerHTML = '';
@@ -176,9 +225,20 @@ function renderPalette() {
     swatch.className = 'palette-color';
     swatch.style.background = color;
     swatch.textContent = index + 1;
+
+    // Highlight if currently selected
+    if (index === selectedColorIndex) {
+      swatch.classList.add('selected');
+    }
+
     swatch.addEventListener('click', () => {
       selectedColorIndex = index;
+
+      // Remove highlight from all, then add to clicked
+      document.querySelectorAll('.palette-color').forEach(el => el.classList.remove('selected'));
+      swatch.classList.add('selected');
     });
+
     paletteDiv.appendChild(swatch);
   });
 }
@@ -249,4 +309,16 @@ function requireKMeans(pixels, k) {
     }
   }
   return centers;
+}
+function updateProgressBar() {
+  const totalCells = gridWidth * gridHeight;
+  let filled = 0;
+  for (let row of colorGrid) {
+    for (let cell of row) {
+      if (cell.filled) filled++;
+    }
+  }
+  const percent = Math.round((filled / totalCells) * 100);
+  document.getElementById('progress-fill').style.width = `${percent}%`;
+  document.getElementById('progress-text').textContent = `${percent}%`;
 }
