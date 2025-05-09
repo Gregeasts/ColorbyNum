@@ -5,6 +5,8 @@ const downloadBtn = document.getElementById('download');
 const paletteDiv = document.getElementById('palette');
 const previewImg = document.getElementById('preview');
 const cellCountInput = document.getElementById('cell-count');
+const showGrid = document.getElementById('toggle-grid');
+showGrid.addEventListener('change', drawGrid);
 let uploadedImage = null;
 upload.addEventListener('change', handleUpload);
 let gridWidth = parseInt(cellCountInput.value, 10);
@@ -125,12 +127,10 @@ function updateCanvasSize() {
 }
 
 function drawGrid() {
-
   const cellSize = baseCellSize * zoomLevel;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  
-
+  const showGrid = document.getElementById('toggle-grid')?.checked;
 
   for (let y = 0; y < gridHeight; y++) {
     for (let x = 0; x < gridWidth; x++) {
@@ -140,8 +140,11 @@ function drawGrid() {
 
       ctx.fillStyle = cell.filled ? colorPalette[cell.index] : '#fff';
       ctx.fillRect(posX, posY, cellSize, cellSize);
-      ctx.strokeStyle = '#ccc';
-      ctx.strokeRect(posX, posY, cellSize, cellSize);
+
+      if (showGrid) {
+        ctx.strokeStyle = '#ccc';
+        ctx.strokeRect(posX, posY, cellSize, cellSize);
+      }
 
       if (!cell.filled) {
         ctx.fillStyle = '#000';
@@ -153,6 +156,7 @@ function drawGrid() {
     }
   }
 }
+
 
 function fillCellAtMouse(e) {
   if (selectedColorIndex === null) return;
